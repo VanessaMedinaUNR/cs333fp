@@ -1,7 +1,8 @@
 stages:
-  - test
+  - deploy
 
-test_runner:
-  stage: test
+deploy:
+  stage: deploy
   script:
-    - echo "GitLab Runner is working!"
+    - source venv/bin/activate
+    - systemctl restart flaskapp
