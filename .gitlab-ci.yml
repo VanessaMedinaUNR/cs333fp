@@ -1,5 +1,6 @@
 stages:
   - build 
+  - test
   - deploy
 
 build:
@@ -13,6 +14,15 @@ build:
     paths:
       - venv/
     expire_in: 1 hour
+  
+test:
+  stage: test
+  image: python:3.11
+  dependencies:
+    - build
+  script:
+    - source venv/bin/activate
+    - pytest tests/
 
 deploy:
   stage: deploy
