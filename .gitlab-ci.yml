@@ -1,3 +1,4 @@
+#pipeline set up, tests server is working 
 stages:
   - build 
   - test
