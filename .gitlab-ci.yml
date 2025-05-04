@@ -1,5 +1,18 @@
 stages:
+  - build 
   - deploy
+
+build:
+  stage: build
+  image: python:3.11  
+  script:
+    - python -m venv venv
+    - source venv/bin/activate
+    - pip install -r requirements.txt
+  artifacts:
+    paths:
+      - venv/
+    expire_in: 1 hour
 
 deploy:
   stage: deploy
