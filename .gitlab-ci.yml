@@ -23,6 +23,8 @@ test:
 
 deploy:
   stage: deploy
+  tags:
+    - local 
   script:
     - docker stop flaskapp || true
     - docker rm flaskapp || true
