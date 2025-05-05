@@ -30,6 +30,4 @@ deploy:
   stage: deploy
   script:
     - source venv/bin/activate
-    - cd /builds/VANESSAMEDINAUNR/cs333fp
-    - git pull main
     - systemctl restart flaskapp
