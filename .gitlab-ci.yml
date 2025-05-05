@@ -8,16 +8,12 @@ build:
   image: docker:latest
   services:
     - docker:dind
-  tags:
-    - local
   script:
     - docker build -t flaskapp .
 
 test:
   stage: test
   image: python:3.11
-  tags:
-    - local
   script:
     - python -m venv venv
     - source venv/bin/activate
@@ -27,8 +23,6 @@ test:
 
 deploy:
   stage: deploy
-  tags:
-    - local
   script:
     - docker stop flaskapp || true
     - docker rm flaskapp || true
