@@ -1,19 +1,24 @@
 stages:
-  - build 
+  - build
   - test
   - deploy
 
+# This is run by the shared GitLab runner
 build:
   stage: build
   image: docker:latest
   services:
     - docker:dind
+  tags:
+    - local
   script:
     - docker build -t flaskapp .
 
 test:
   stage: test
   image: python:3.11
+  tags:
+    - local
   script:
     - python -m venv venv
     - source venv/bin/activate
@@ -24,8 +29,9 @@ test:
 deploy:
   stage: deploy
   tags:
-    - local 
+    - local
   script:
+    - echo "Deploying using local Docker"
     - docker stop flaskapp || true
     - docker rm flaskapp || true
     - docker run -d -p 5001:5000 --name flaskapp flaskapp
