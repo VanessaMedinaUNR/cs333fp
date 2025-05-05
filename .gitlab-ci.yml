@@ -33,4 +33,3 @@ deploy:
     - docker stop flaskapp || true
     - docker rm flaskapp || true
     - docker run -d -p 5001:5000 --name flaskapp flaskapp
-docker run -d -p 5001:5000 flaskapp 
