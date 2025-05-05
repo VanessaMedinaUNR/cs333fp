@@ -1,0 +1,12 @@
+[init]
+	defaultBranch = none
+[fetch]
+	recurseSubmodules = false
+[credential]
+	interactive = never
+[gc]
+	autoDetach = false
+[transfer]
+	bundleURI = true
+[http "https://gitlab.com"]
+	sslCAInfo = /Users/nessamedina/springsemester25/CS333/cs333fp/builds/LecLc_MdV/0/VANESSAMEDINAUNR/cs333fp.tmp/CI_SERVER_TLS_CA_FILE
