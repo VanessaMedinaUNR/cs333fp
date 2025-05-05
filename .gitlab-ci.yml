@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
 
-# This is run by the shared GitLab runner
+
 build:
   stage: build
   image: docker:latest
