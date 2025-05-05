@@ -1,4 +1,3 @@
-#pipeline set up, tests server is working 
 stages:
   - build 
   - test
@@ -6,28 +5,32 @@ stages:
 
 build:
   stage: build
-  image: python:3.11  
+  image: docker:latest
+  services:
+    - docker:dind
+  tags:
+    - local
+  script:
+    - docker build -t flaskapp .
+
+test:
+  stage: test
+  image: python:3.11
+  tags:
+    - local
   script:
     - python -m venv venv
     - source venv/bin/activate
     - pip install -r requirements.txt
-  artifacts:
-    paths:
-      - venv/
-    expire_in: 1 hour
-  
-test:
-  stage: test
-  image: python:3.11
-  dependencies:
-    - build
-  script:
-    - source venv/bin/activate
     - export PYTHONPATH=$(pwd)
     - pytest tests/
 
 deploy:
   stage: deploy
+  tags:
+    - local
   script:
-    - source venv/bin/activate
-    - systemctl restart flaskapp
+    - docker stop flaskapp || true
+    - docker rm flaskapp || true
+    - docker run -d -p 5001:5000 --name flaskapp flaskapp
+docker run -d -p 5001:5000 flaskapp 
