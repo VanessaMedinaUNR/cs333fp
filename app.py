@@ -30,7 +30,7 @@ def index():
         except:
             return 'There was an issue adding your task'
     else:
-      tasks = Todo.query.all()
+      tasks = Todo.query.order_by(Todo.date_created).all()
       render_template('index.html', tasks = tasks)
 
 if __name__ == '__main__':
