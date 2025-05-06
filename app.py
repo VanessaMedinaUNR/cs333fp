@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 # Create an instance of the Flask class
@@ -15,9 +15,21 @@ class Todo(db.Model):
         return '<Task %r>' % self.id
 
 # Define a route for the home page
-@app.route('/')
-def hello_world():
-    return render_template('index.html')
+@app.route('/', methods=['POST', 'GET'])
+def index():
+    if request.method == "POST":
+        task_content = request.form['content']
+        new_task = Todo(content=task_content)
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue adding your task'
+    else:
+      tasks = Todo.query.order_by(Todo.date_created).all()
+      render_template('index.html', tasks = tasks)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
